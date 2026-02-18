@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+Disallow: /odeme
+Disallow: /sepet
+
+Sitemap: https://sencanaydinlatma.com/sitemap.xml
+

@@ -1,0 +1,141 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Ana Renk - Soft siyah / antrasit (#111827) */
+    /* Arka plan - Hafif turuncumsu krem tonu */
+    --background: 30 40% 98%; /* Hafif sıcak turuncumsu beyaz */
+    --foreground: 222 47% 11%; /* #111827 */
+    
+    /* Primary - Antrasit (navigasyon, footer) */
+    --primary: 222 47% 11%; /* #111827 */
+    --primary-foreground: 0 0% 100%;
+    
+    /* Aksiyon Rengi - Sıcak sarı / amber (#F59E0B) */
+    --accent: 38 92% 50%; /* #F59E0B - Amber-500 */
+    --accent-foreground: 0 0% 100%;
+    
+    /* Destek Renkleri - Turuncumsu tonlarla uyumlu */
+    --secondary: 30 30% 95%; /* Hafif sıcak gri */
+    --secondary-foreground: 222 47% 11%;
+    
+    --muted: 30 25% 95%; /* Hafif sıcak muted */
+    --muted-foreground: 215 16% 47%; /* #6B7280 */
+    
+    --card: 0 0% 100%;
+    --card-foreground: 222 47% 11%;
+    
+    --popover: 0 0% 100%;
+    --popover-foreground: 222 47% 11%;
+    
+    --border: 214 32% 91%; /* #E5E7EB */
+    --input: 214 32% 91%;
+    --ring: 38 92% 50%; /* Accent rengi */
+    
+    --radius: 0.5rem;
+    
+    /* Özel Renkler (Dokümanlardan) */
+    --color-primary: 222 47% 11%; /* #111827 */
+    --color-primary-dark: 222 50% 8%; /* #0F172A */
+    --color-primary-light: 222 47% 15%; /* #1F2937 */
+    --color-accent: 38 92% 50%; /* #F59E0B */
+    --color-accent-light: 38 92% 60%; /* #FBBF24 */
+    --color-accent-dark: 38 92% 40%; /* #D97706 */
+    --color-gray-light: 210 40% 96%; /* #F3F4F6 */
+    --color-gray-lighter: 210 40% 98%; /* #F9FAFB */
+    --color-border: 214 32% 91%; /* #E5E7EB */
+    --color-border-dark: 214 32% 82%; /* #D1D5DB */
+    --color-success: 142 76% 36%; /* #10B981 */
+    --color-error: 0 84% 60%; /* #EF4444 */
+    --color-warning: 38 92% 50%; /* #F59E0B */
+    --color-info: 217 91% 60%; /* #3B82F6 */
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+}
+
+@layer utilities {
+  .container-custom {
+    @apply mx-auto max-w-[1280px] px-4 sm:px-6 lg:px-8;
+  }
+  
+  .text-balance {
+    text-wrap: balance;
+  }
+  
+  .line-clamp-2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+}
+
+/* Smooth transitions */
+* {
+  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+}
+
+/* Focus visible for accessibility */
+:focus-visible {
+  @apply outline-none ring-2 ring-ring ring-offset-2;
+}
+
+/* Skip to content link (A11Y) */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+.focus\:not-sr-only:focus {
+  position: static;
+  width: auto;
+  height: auto;
+  padding: inherit;
+  margin: inherit;
+  overflow: visible;
+  clip: auto;
+  white-space: normal;
+}
+
+/* Reduced motion support (A11Y) */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Scrollbar hide utility */
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
