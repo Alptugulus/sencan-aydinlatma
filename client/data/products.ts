@@ -1,3 +1,5 @@
+import { generatedProducts } from "./generated-products";
+
 export interface Product {
   id: string;
   name: string;
@@ -13,6 +15,9 @@ export interface Product {
   featured?: boolean;
 }
 
+const BASIC_BULB_IMAGE =
+  "/basic-bulb.svg";
+
 /** @deprecated Kategori yapısı için client/data/categories.ts kullanın. Geriye dönük uyumluluk için tutuldu. */
 export const categories = [
   { name: "İç Mekan", slug: "ic-mekan", image: "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=800", description: "Modern iç mekan aydınlatma çözümleri" },
@@ -22,7 +27,7 @@ export const categories = [
   { name: "Spot & Ray", slug: "spot-ray", image: "https://images.unsplash.com/photo-1513506003901-1e6a229e2d15?w=800", description: "Spot ve ray aydınlatma sistemleri" },
 ];
 
-export const products: Product[] = [
+const curatedProducts: Product[] = [
   {
     id: "1",
     name: "E27 9W Sıcak Beyaz LED Ampul",
@@ -183,14 +188,27 @@ export const products: Product[] = [
   },
 ];
 
+export const products: Product[] = [...curatedProducts, ...generatedProducts].map(
+  (product) => ({
+    ...product,
+    image: BASIC_BULB_IMAGE,
+    images: undefined,
+  })
+);
+
 export function getProductBySlug(slug: string): Product | undefined {
   return products.find((p) => p.slug === slug);
 }
 
 export function getProductsByCategory(categorySlug: string): Product[] {
-  // "ampul" ana kategorisi LED ampul ürünlerini de gösterir
+  // "ampul" ana kategorisi ampul + LED ampul ürünlerini birlikte gösterir
   if (categorySlug === "ampul") {
-    return products.filter((p) => p.categorySlug === "led-ampul" || p.category.includes("Ampul"));
+    return products.filter(
+      (p) =>
+        p.categorySlug === "ampul" ||
+        p.categorySlug === "led-ampul" ||
+        p.category.toLocaleLowerCase("tr-TR").includes("ampul")
+    );
   }
   const directMatch = products.filter((p) => p.categorySlug === categorySlug);
   if (directMatch.length > 0) return directMatch;
