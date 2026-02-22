@@ -9,29 +9,24 @@ import { formatPrice } from "../lib/utils";
 import { toast } from "sonner";
 import SearchBar from "./SearchBar";
 import logoImage from "../images/sencan-logo-buyuk-yatay-1356x436.webp";
+import { PARENT_CATEGORIES } from "../data/categories";
 
-const icMekanSubcategories = [
-  { label: "Yılbaşı", to: "/kategori/ic-mekan/yilbasi" },
-  { label: "Saçaklı", to: "/kategori/ic-mekan/sacakli" },
-  { label: "Meteor", to: "/kategori/ic-mekan/meteor" },
-  { label: "Ramazan", to: "/kategori/ic-mekan/ramazan" },
-  { label: "Soft Ampul", to: "/kategori/ic-mekan/soft-ampul" },
-  { label: "LED Ampul", to: "/kategori/ic-mekan/led-ampul" },
-];
+const icMekanSubcategories =
+  PARENT_CATEGORIES.find((category) => category.slug === "ic-mekan")?.subcategories.map((subcategory) => ({
+    label: subcategory.label,
+    to: `/kategori/ic-mekan/${subcategory.slug}`,
+  })) ?? [];
 
-const disMekanSubcategories = [
-  { label: "Yılbaşı", to: "/kategori/dis-mekan/yilbasi" },
-  { label: "Ramazan", to: "/kategori/dis-mekan/ramazan" },
-  { label: "Saçaklı", to: "/kategori/dis-mekan/sacakli" },
-  { label: "LED", to: "/kategori/dis-mekan/led" },
-];
+const disMekanSubcategories =
+  PARENT_CATEGORIES.find((category) => category.slug === "dis-mekan")?.subcategories.map((subcategory) => ({
+    label: subcategory.label,
+    to: `/kategori/dis-mekan/${subcategory.slug}`,
+  })) ?? [];
 
 const navMenuItems = [
   { type: "link" as const, label: "Ampul", to: "/kategori/ampul" },
   { type: "dropdown" as const, label: "İç Mekan", slug: "ic-mekan", subcategories: icMekanSubcategories },
   { type: "dropdown" as const, label: "Dış Mekan", slug: "dis-mekan", subcategories: disMekanSubcategories },
-  { type: "link" as const, label: "Hakkımızda", to: "/hakkimizda" },
-  { type: "link" as const, label: "İletişim", to: "/iletisim" },
 ];
 
 export default function Header() {

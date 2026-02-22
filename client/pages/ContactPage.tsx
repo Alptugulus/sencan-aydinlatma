@@ -5,6 +5,11 @@ import { Card, CardContent, CardHeader, CardTitle } from "../components/ui/card"
 import { CONTACT_INFO, getPhoneUrl, getEmailUrl, getWhatsAppUrl } from "../lib/constants";
 
 export default function ContactPage() {
+  const fullAddress = `${CONTACT_INFO.address.full}, ${CONTACT_INFO.address.postalCode} ${CONTACT_INFO.address.district}/${CONTACT_INFO.address.city}, ${CONTACT_INFO.address.country}`;
+  const mapsSearchUrl = CONTACT_INFO.googleMaps;
+  const mapsDirectionsUrl = `https://www.google.com/maps/dir/?api=1&destination=${CONTACT_INFO.mapCoordinates.lat},${CONTACT_INFO.mapCoordinates.lng}`;
+  const mapsEmbedUrl = `https://www.google.com/maps?hl=tr&q=${CONTACT_INFO.mapCoordinates.lat},${CONTACT_INFO.mapCoordinates.lng}&z=16&output=embed`;
+
   return (
     <>
       <Helmet>
@@ -36,14 +41,14 @@ export default function ContactPage() {
               </CardHeader>
               <CardContent>
                 <p className="text-foreground">
-                  Emekyemez Mah. Okçumusa Cad. Tutsak Sok. No:15/5
+                  {CONTACT_INFO.address.full}
                 </p>
-                <p className="text-muted-foreground mt-1">34420 Karaköy – İstanbul</p>
+                <p className="text-muted-foreground mt-1">
+                  {CONTACT_INFO.address.postalCode} {CONTACT_INFO.address.district} – {CONTACT_INFO.address.city}
+                </p>
                 <Button asChild variant="outline" className="mt-4">
                   <a
-                    href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
-                      `${CONTACT_INFO.address.full} Karaköy İstanbul`
-                    )}`}
+                    href={mapsSearchUrl}
                     target="_blank"
                     rel="noopener noreferrer"
                   >
@@ -118,6 +123,43 @@ export default function ContactPage() {
               </CardContent>
             </Card>
           </div>
+
+          {/* Google Maps */}
+          <Card className="mt-6">
+            <CardHeader>
+              <div className="flex items-center gap-3 mb-2">
+                <MapPin className="h-6 w-6 text-primary" />
+                <CardTitle>Google Haritalar</CardTitle>
+              </div>
+            </CardHeader>
+            <CardContent>
+              <div className="overflow-hidden rounded-lg border border-border">
+                <iframe
+                  title="Sencan Aydinlatma Google Haritalar Konumu"
+                  src={mapsEmbedUrl}
+                  className="h-[300px] w-full md:h-[360px]"
+                  loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
+                  allowFullScreen
+                />
+              </div>
+              <p className="mt-3 text-sm text-muted-foreground">
+                Karaköy konumumuzu harita üzerinden açıp tek tıkla yol tarifi alabilirsiniz.
+              </p>
+              <div className="mt-4 flex flex-col sm:flex-row gap-3">
+                <Button asChild className="w-full sm:w-auto">
+                  <a href={mapsDirectionsUrl} target="_blank" rel="noopener noreferrer">
+                    Yol Tarifi Al
+                  </a>
+                </Button>
+                <Button asChild variant="outline" className="w-full sm:w-auto">
+                  <a href={mapsSearchUrl} target="_blank" rel="noopener noreferrer">
+                    Google Maps'te Aç
+                  </a>
+                </Button>
+              </div>
+            </CardContent>
+          </Card>
 
           {/* Instagram */}
           <Card className="mt-6">
